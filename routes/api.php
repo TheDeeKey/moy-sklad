@@ -22,13 +22,10 @@ Route::prefix('my-sklad')->group(function () {
 
     // Склады
     Route::prefix('store')->group(function () use ($base_url) {
+
         // Получение списка складов
         Route::get('/', function (Request $request) use ($base_url) {
-            //TODO
-            $limit = $request->query('limit') ?? 10;
-            //c65eaa235d5c1695cf7f5aa9993498952b56cf90
-
-            return Http::withToken($request->bearerToken())->get($base_url .'/store?limit=' . $limit);
+            return Http::withToken($request->bearerToken())->get($base_url .'/store');
         });
 
         // Получение склада
@@ -38,58 +35,31 @@ Route::prefix('my-sklad')->group(function () {
 
         // Создание нового склада
         Route::post('/', function (Request $request) use ($base_url) {
-            // name
-            // ID из файла выгрузки
-            // Город
-            // Широта
-            // Долгота
-            // Зоны доставок
-            // Филлиалы
-            // Изображение
-
-            $response = Http::withToken($request->bearerToken())->post($base_url .'/store', [
+            return Http::withToken($request->bearerToken())->post($base_url .'/store', [
                 'name' => $request->name
             ]);
-
-            return $response;
         });
 
         // Редактирование конкретного склада
         Route::put('{id}', function (Request $request, $id) use ($base_url) {
-            // name
-            // ID из файла выгрузки
-            // Город -> addressFull -> city
-            // Широта
-            // Долгота
-            // Зоны доставок
-            // Филлиалы
-            // Изображение
-
-            $response = Http::withToken($request->bearerToken())->put($base_url .'/store/' . $id, [
+            return Http::withToken($request->bearerToken())->put($base_url .'/store/' . $id, [
                 'name' => $request->name
             ]);
 
-            return $response;
         });
 
         // Удаление склада
         Route::delete('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->delete($base_url .'/store/' . $id);
-
-            return $response;
+            return Http::withToken($request->bearerToken())->delete($base_url .'/store/' . $id);
         });
     });
 
     // Товар
     Route::prefix('product')->group(function () use ($base_url) {
 
-        //Список товаров
+        //Получение списка товаров
         Route::get('/', function (Request $request) use ($base_url) {
-            $limit = $request->query('limit') ?? 15;
-            //TODO Pagination
-            //c65eaa235d5c1695cf7f5aa9993498952b56cf90
-
-            return Http::withToken($request->bearerToken())->get($base_url .'/product?limit=' . $limit);
+            return Http::withToken($request->bearerToken())->get($base_url .'/product');
         });
 
         // Получение товара
@@ -99,73 +69,35 @@ Route::prefix('my-sklad')->group(function () {
 
         // Создание нового товара
         Route::post('/', function (Request $request) use ($base_url) {
-            // name
-            // ID из файла выгрузки
-            // Город
-            // Широта
-            // Долгота
-            // Зоны доставок
-            // Филлиалы
-            // Изображение
-
-            $response = Http::withToken($request->bearerToken())->post($base_url .'/product', [
+            return Http::withToken($request->bearerToken())->post($base_url .'/product', [
                 'name' => $request->name,
                 'description' => $request->description,
             ]);
-
-            return $response;
         });
 
         // Удаление товара
         Route::delete('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->delete($base_url .'/product/' . $id);
-
-            return $response;
+            return Http::withToken($request->bearerToken())->delete($base_url .'/product/' . $id);
         });
 
         // Массовое удаление товаров
         Route::post('/delete', function (Request $request) use ($base_url) {
-            // name
-            // ID из файла выгрузки
-            // Город
-            // Широта
-            // Долгота
-            // Зоны доставок
-            // Филлиалы
-            // Изображение
-
-            $response = Http::withToken($request->bearerToken())->post($base_url .'/product/delete', $request->all());
-
-            return $response;
+            return Http::withToken($request->bearerToken())->post($base_url .'/product/delete', $request->all());
         });
 
         // Обновление товара
         Route::put('{id}', function (Request $request, $id) use ($base_url) {
-            // name
-            // ID из файла выгрузки
-            // Город -> addressFull -> city
-            // Широта
-            // Долгота
-            // Зоны доставок
-            // Филлиалы
-            // Изображение
-
-            $response = Http::withToken($request->bearerToken())->put($base_url .'/product/' . $id, [
+            return Http::withToken($request->bearerToken())->put($base_url .'/product/' . $id, [
                 'name' => $request->name
-            ]);
-
-            return $response;
+            ]);;
         });
     });
 
     // Группа товаров
     Route::prefix('productfolder')->group(function () use ($base_url) {
 
-        //Список списка точек продаж
+        //Получение списка точек продаж
         Route::get('/', function (Request $request) use ($base_url) {
-            $limit = $request->query('limit') ?? 20;
-            //TODO Pagination
-
             return Http::withToken($request->bearerToken())->get($base_url .'/productfolder');
         });
 
@@ -176,31 +108,24 @@ Route::prefix('my-sklad')->group(function () {
 
         // Создание новой точки продаж
         Route::post('/', function (Request $request) use ($base_url) {
-
-            $response = Http::withToken($request->bearerToken())->post($base_url . '/productfolder', [
+            return Http::withToken($request->bearerToken())->post($base_url . '/productfolder', [
                 'name' => $request->name,
                 'organization' => $request->organization,
                 'store' => $request->store,
                 'priceType' => $request->priceType,
             ]);
-
-            return $response;
         });
 
         // Удаление точки продаж
         Route::delete('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->delete($base_url . '/productfolder/' . $id);
-
-            return $response;
+            return Http::withToken($request->bearerToken())->delete($base_url . '/productfolder/' . $id);
         });
 
         // Обновление точки продаж
         Route::put('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->put($base_url .'/productfolder/' . $id, [
+            return Http::withToken($request->bearerToken())->put($base_url .'/productfolder/' . $id, [
                 'name' => $request->name
             ]);
-
-            return $response;
         });
     });
 
@@ -209,10 +134,7 @@ Route::prefix('my-sklad')->group(function () {
 
         //Список списка точек продаж
         Route::get('/', function (Request $request) use ($base_url) {
-            $limit = $request->query('limit') ?? 15;
-            //TODO Pagination
-
-            return Http::withToken($request->bearerToken())->get($base_url .'/retailstore?limit=' . $limit);
+            return Http::withToken($request->bearerToken())->get($base_url .'/retailstore');
         });
 
         // Получение точки продаж по айди
@@ -222,31 +144,24 @@ Route::prefix('my-sklad')->group(function () {
 
         // Создание новой точки продаж
         Route::post('/', function (Request $request) use ($base_url) {
-
-            $response = Http::withToken($request->bearerToken())->post($base_url . '/retailstore', [
+            return Http::withToken($request->bearerToken())->post($base_url . '/retailstore', [
                 'name' => $request->name,
                 'organization' => $request->organization,
                 'store' => $request->store,
                 'priceType' => $request->priceType,
             ]);
-
-            return $response;
         });
 
         // Удаление точки продаж
         Route::delete('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->delete($base_url . '/retailstore/' . $id);
-
-            return $response;
+            return Http::withToken($request->bearerToken())->delete($base_url . '/retailstore/' . $id);
         });
 
         // Обновление точки продаж
         Route::put('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->put($base_url .'/retailstore/' . $id, [
+            return Http::withToken($request->bearerToken())->put($base_url .'/retailstore/' . $id, [
                 'name' => $request->name
             ]);
-
-            return $response;
         });
     });
 
@@ -255,10 +170,7 @@ Route::prefix('my-sklad')->group(function () {
 
         //Список заказов пользователей
         Route::get('/', function (Request $request) use ($base_url) {
-            $limit = $request->query('limit') ?? 20;
-            //TODO Pagination
-
-            return Http::withToken($request->bearerToken())->get($base_url .'/customerorder?limit=' . $limit);
+            return Http::withToken($request->bearerToken())->get($base_url .'/customerorder');
         });
 
         // Получение заказа
@@ -281,22 +193,17 @@ Route::prefix('my-sklad')->group(function () {
 
         // Удаление заказа
         Route::delete('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->delete($base_url . '/customerorder/' . $id);
-
-            return $response;
+            return Http::withToken($request->bearerToken())->delete($base_url . '/customerorder/' . $id);
         });
 
         // Обновление заказа
         Route::put('{id}', function (Request $request, $id) use ($base_url) {
-
-            $response = Http::withToken($request->bearerToken())->put($base_url .'/customerorder/' . $id, [
+            return Http::withToken($request->bearerToken())->put($base_url .'/customerorder/' . $id, [
                 'organization' => $request->organization,
                 'agent' => $request->agent,
                 'organizationAccount ' => $request->organizationAccount,
                 'agentAccount ' => $request->agentAccount,
             ]);
-
-            return $response;
         });
     });
 
@@ -305,9 +212,6 @@ Route::prefix('my-sklad')->group(function () {
 
         //Список списка точек продаж
         Route::get('/', function (Request $request) use ($base_url) {
-            $limit = $request->query('limit') ?? 20;
-            //TODO Pagination
-
             return Http::withToken($request->bearerToken())->get($base_url .'/uom');
         });
 
@@ -318,31 +222,24 @@ Route::prefix('my-sklad')->group(function () {
 
         // Создание новой точки продаж
         Route::post('/', function (Request $request) use ($base_url) {
-
-            $response = Http::withToken($request->bearerToken())->post($base_url . '/uom', [
+            return Http::withToken($request->bearerToken())->post($base_url . '/uom', [
                 'name' => $request->name,
                 'organization' => $request->organization,
                 'store' => $request->store,
                 'priceType' => $request->priceType,
-            ]);
-
-            return $response;
+            ]);;
         });
 
         // Удаление точки продаж
         Route::delete('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->delete($base_url . '/uom/' . $id);
-
-            return $response;
+            return Http::withToken($request->bearerToken())->delete($base_url . '/uom/' . $id);;
         });
 
         // Обновление точки продаж
         Route::put('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->put($base_url .'/uom/' . $id, [
+            return Http::withToken($request->bearerToken())->put($base_url .'/uom/' . $id, [
                 'name' => $request->name
             ]);
-
-            return $response;
         });
     });
 
@@ -351,9 +248,6 @@ Route::prefix('my-sklad')->group(function () {
 
         //Список характеристик товаров
         Route::get('/', function (Request $request) use ($base_url) {
-            $limit = $request->query('limit') ?? 20;
-            //TODO Pagination
-
             return Http::withToken($request->bearerToken())->get($base_url .'/variant');
         });
 
@@ -364,31 +258,24 @@ Route::prefix('my-sklad')->group(function () {
 
         // Создание новой характеристики
         Route::post('/', function (Request $request) use ($base_url) {
-
-            $response = Http::withToken($request->bearerToken())->post($base_url . '/variant', [
+            return Http::withToken($request->bearerToken())->post($base_url . '/variant', [
                 'name' => $request->name,
                 'organization' => $request->organization,
                 'store' => $request->store,
                 'priceType' => $request->priceType,
-            ]);
-
-            return $response;
+            ]);;
         });
 
         // Удаление характеристики
         Route::delete('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->delete($base_url . '/variant/' . $id);
-
-            return $response;
+            return Http::withToken($request->bearerToken())->delete($base_url . '/variant/' . $id);
         });
 
         // Обновление характеристики
         Route::put('{id}', function (Request $request, $id) use ($base_url) {
-            $response = Http::withToken($request->bearerToken())->put($base_url .'/variant/' . $id, [
+            return Http::withToken($request->bearerToken())->put($base_url .'/variant/' . $id, [
                 'name' => $request->name
             ]);
-
-            return $response;
         });
     });
 });
