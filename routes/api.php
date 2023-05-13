@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MoySkladController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,9 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('my-sklad')->group(function () {
 
     $base_url = "https://online.moysklad.ru/api/remap/1.2/entity";
+
+    Route::get('/data', [MoySkladController::class, 'getAllData']);
+
 
     // Склады
     Route::prefix('store')->group(function () use ($base_url) {

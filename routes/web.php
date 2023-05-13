@@ -18,9 +18,6 @@ use Illuminate\Support\Facades\Route;
 
 
 
-
-
-
 Route::get('/moy-sklad/', function () {
     $response = Http::withHeaders([
         'Authorization' => 'Basic c65eaa235d5c1695cf7f5aa9993498952b56cf90'
