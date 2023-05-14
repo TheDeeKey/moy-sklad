@@ -4,6 +4,7 @@ namespace App\Http\Resources\MoySklad;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Http;
 
 class ProductResource extends JsonResource
 {
@@ -22,12 +23,16 @@ class ProductResource extends JsonResource
             $parent_id = substr($parentIdInitialString, strlen("https://online.moysklad.ru/api/remap/1.2/entity/productfolder/"));
         }
 
+        $photosGet = Http::withToken(session()->get('bearer_token'))->get($this->images->meta->href);
+        $photosJson = json_decode($photosGet);
+        $photosResource = ProductImagesResource::collection($photosJson->rows);
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'price' => $this->salePrices[0]->value,
             'priceold' => 0,
-            'photo' => $this->images->meta->href,
+            'photo' => $photosResource,
             'text' => $this->description,
             'position' => 'desc', // ?
             'parentid' => $parent_id,

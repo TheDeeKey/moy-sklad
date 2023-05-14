@@ -18,8 +18,6 @@ class CustomerOrderResource extends JsonResource
         $storeIdInitialString = $this->store->meta->href ?? '';
         $store_id = '';
 
-
-
         if ($storeIdInitialString != '') {
             $store_id = substr($storeIdInitialString, strlen("https://online.moysklad.ru/api/remap/1.2/entity/store/"));
         }

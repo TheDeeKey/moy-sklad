@@ -19,7 +19,7 @@ class UomResource extends JsonResource
             'position' => 'desc',
             'name' => $this->name,
             'description' => $this->description ?? '',
-            'step' => 0.5,
+            'step' => 0,
         ];
     }
 }

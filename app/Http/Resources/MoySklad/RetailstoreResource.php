@@ -17,7 +17,7 @@ class RetailstoreResource extends JsonResource
         return [
             'id' => $this->id,
             'enabled' => $this->active,
-            'id_crm' => $this->externalCode, // Код склада $this->code
+            'id_crm' => 'none',
             'sorting' => 'desc',
             'name' => $this->name,
             'latitude' => 'none',

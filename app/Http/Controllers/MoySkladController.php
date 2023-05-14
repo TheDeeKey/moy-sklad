@@ -17,6 +17,8 @@ class MoySkladController extends Controller
 
     public function getAllData(Request $request)
     {
+        session(['bearer_token' => $request->bearerToken()]);
+
         $productResource = ProductResource::collection($this->toJson($request->bearerToken(), '/product'));
         $productFolderResource = CategoryResource::collection($this->toJson($request->bearerToken(), '/productfolder'));
         $storeResource = StoreResource::collection($this->toJson($request->bearerToken(), '/store'));
@@ -35,7 +37,6 @@ class MoySkladController extends Controller
     }
 
     private function toJson ($token,$endpoint) {
-
         $list = Http::withToken($token)->get($this->base_url . '' .$endpoint);
         $listToJson = json_decode($list);
 

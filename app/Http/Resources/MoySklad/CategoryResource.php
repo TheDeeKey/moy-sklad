@@ -17,13 +17,12 @@ class CategoryResource extends JsonResource
         return [
             'id' => $this->id, // uuid?
             'name' => $this->name,
-            'id_crm' =>  $this->article ?? 'none', //article
+            'id_crm' =>  $this->article ?? null, //article
             'parentid' => 'none',
             'position' => 'desc',
             'text' => $this->description ?? 'none',
             'picture' => 'none',
             'view' => true,
-
         ];
     }
 }
